@@ -1,0 +1,9 @@
+
+.header {
+    grid-area: h; /*псевдоним*/
+    background-color: green;
+}
+
+.header img {
+    width: 20px;
+}
