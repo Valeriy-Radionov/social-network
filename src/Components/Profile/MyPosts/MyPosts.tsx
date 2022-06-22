@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./MyPosts.module.css";
-import Post, {PostType} from "./Post/Post";
+import Post, {PropsType} from "./Post/Post";
 
 export type MyPostsState = {
-    posts: PostType[]
+    posts: PropsType[]
     addPost: (postMessage: string) => void
 }
 

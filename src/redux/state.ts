@@ -1,10 +1,10 @@
 import {DialogType} from "../Components/Dialogs/DialogItem/DialogItem";
-import {PostType} from "../Components/Profile/MyPosts/Post/Post";
+import {PropsType} from "../Components/Profile/MyPosts/Post/Post";
 import {MessageType} from "../Components/Dialogs/Message/Message";
 import {rerenderEntireTree} from "../render";
 
 export type ProfilePage = {
-    posts: PostType[]
+    posts: PropsType[]
 }
 export type DialogsPage = {
     dialogs: DialogType[]
@@ -53,7 +53,7 @@ export let state: RootStateType = {
 }
 
 export let addPost = (postMessage: string) => {
-    let newPost: PostType = {id: "5", message: postMessage, likesCount: 0}
+    let newPost: PropsType = {id: "5", message: postMessage, likesCount: 0}
     state.profilePage.posts.push(newPost)
     rerenderEntireTree(state)
 }
