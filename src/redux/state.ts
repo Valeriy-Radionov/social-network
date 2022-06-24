@@ -5,6 +5,7 @@ import {rerenderEntireTree} from "../render";
 
 export type ProfilePage = {
     posts: PropsType[]
+    newPostText: string
 }
 export type DialogsPage = {
     dialogs: DialogType[]
@@ -19,7 +20,8 @@ export type RootStateType = {
 
 export type StateOfData = {
     data: RootStateType
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 export let state: RootStateType = {
@@ -29,7 +31,8 @@ export let state: RootStateType = {
             {id: "2", message: "Created react App", likesCount: 2},
             {id: "3", message: "Hi!!!!!!", likesCount: 22},
             {id: "4", message: "Hello, my name is Vasya", likesCount: 12}
-        ]
+        ],
+        newPostText: ""
     },
     dialogsPage: {
         dialogs: [
@@ -52,8 +55,15 @@ export let state: RootStateType = {
     sideBar: {}
 }
 
-export let addPost = (postMessage: string) => {
-    let newPost: PropsType = {id: "5", message: postMessage, likesCount: 0}
+export let addPost = () => {
+    let newPost: PropsType = {id: "5", message: state.profilePage.newPostText, likesCount: 0}
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ""
     rerenderEntireTree(state)
 }
+
+export let updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+}
+
