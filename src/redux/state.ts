@@ -1,8 +1,10 @@
 import {DialogType} from "../Components/Dialogs/DialogItem/DialogItem";
 import {PropsType} from "../Components/Profile/MyPosts/Post/Post";
 import {MessageType} from "../Components/Dialogs/Message/Message";
-import {rerenderEntireTree} from "../render";
 
+let rerenderEntireTree = (state: RootStateType) => {
+    console.log("The state was change")
+}
 export type ProfilePage = {
     posts: PropsType[]
     newPostText: string
@@ -55,14 +57,18 @@ export let state: RootStateType = {
     sideBar: {}
 }
 
-export let addPost = () => {
+export const subscribe = (observer: (state: RootStateType) => void) => {
+    rerenderEntireTree = observer
+}
+
+export const addPost = () => {
     let newPost: PropsType = {id: "5", message: state.profilePage.newPostText, likesCount: 0}
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ""
     rerenderEntireTree(state)
 }
 
-export let updateNewPostText = (newText: string) => {
+export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
     rerenderEntireTree(state)
 }
