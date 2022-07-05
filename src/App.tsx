@@ -15,7 +15,7 @@ const App: React.FC<StateOfData> = (props) => {
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Route path="/dialogs"
-                           render={() => <Dialogs state={props.data.dialogsPage}/>}/>
+                           render={() => <Dialogs state={props.data.dialogsPage} dispatch={props.dispatch}/>}/>
                     <Route path="/profile"
                            render={() => <Profile profilePage={props.data.profilePage} dispatch={props.dispatch}/>}/>
                 </div>

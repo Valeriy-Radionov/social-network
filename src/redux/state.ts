@@ -1,6 +1,9 @@
 import {DialogType} from "../Components/Dialogs/DialogItem/DialogItem";
 import {PropsType} from "../Components/Profile/MyPosts/Post/Post";
 import {MessageType} from "../Components/Dialogs/Message/Message";
+import profileReducer from "./ProfileReducer";
+import dialogsReducer from "./DialogsReducer";
+import sideBarReducer from "./SideBarReducer";
 
 export type ProfilePage = {
     posts: PropsType[]
@@ -9,6 +12,7 @@ export type ProfilePage = {
 export type DialogsPage = {
     dialogs: DialogType[]
     messages: MessageType[]
+    newMessageBody: string
 }
 export type SideBar = {}
 export type RootStateType = {
@@ -21,15 +25,29 @@ export type StateOfData = {
     data: RootStateType
     dispatch: (action: ActionsType) => void
 }
-type AddPostActionType = {
+export type AddPostActionType = {
     type: "ADD-POST"
 }
-type UpdateNewPostTextActionType = {
+export type UpdateNewPostTextActionType = {
     type: "UPDATE-NEW-POST-TEXT"
     newText: string
 }
 
-export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
+export type UpdateNewMessageTextActionType = {
+    type: "UPDATE-NEW-MESSAGE-BODY"
+    body: string
+}
+
+export type SendMessageActionType = {
+    type: "SEND-MESSAGE"
+}
+
+
+export type ActionsType =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageTextActionType
+    | SendMessageActionType
 
 export type StoreType = {
     _state: RootStateType
@@ -37,10 +55,8 @@ export type StoreType = {
 
     subscribe: (observer: (state: RootStateType) => void) => void
     getState: () => RootStateType
-    
+
     dispatch: (action: ActionsType) => void
-
-
 }
 
 export const store: StoreType = {
@@ -52,7 +68,7 @@ export const store: StoreType = {
                 {id: "3", message: "Hi!!!!!!", likesCount: 22},
                 {id: "4", message: "Hello, my name is Vasya", likesCount: 12}
             ],
-            newPostText: ""
+            newPostText: "It camasutra"
         },
         dialogsPage: {
             dialogs: [
@@ -70,7 +86,8 @@ export const store: StoreType = {
                 {id: "4", message: "Hey"},
                 {id: "5", message: "Good day"},
                 {id: "6", message: "Hello"}
-            ]
+            ],
+            newMessageBody: ""
         },
         sideBar: {}
     },
@@ -85,16 +102,10 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            let newPost: PropsType = {id: "5", message: this._state.profilePage.newPostText, likesCount: 0}
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ""
-            this._callSubscriber(this._state)
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sideBar = sideBarReducer(this._state.sideBar, action)
+        this._callSubscriber(this._state)
     }
-
 }
 // window.store = store
