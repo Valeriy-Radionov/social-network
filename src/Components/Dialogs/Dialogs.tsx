@@ -3,7 +3,7 @@ import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem"
 import {DialogType} from "./DialogItem/DialogItem"
 import Message, {MessageType} from "./Message/Message";
-import {ActionsType, store} from "../../redux/state";
+import {ActionsType} from "../../redux/redux-store";
 import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/DialogsReducer";
 
 export type DialogsStateType = {
@@ -19,10 +19,10 @@ export type DialogsPropsType = {
 const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElement = props.state.dialogs.map((dialog) => {
-        return <DialogItem id={dialog.id} name={dialog.name}/>
+        return <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>
     })
     let messagesElement = props.state.messages.map((message) => {
-        return <Message id={message.id} message={message.message}/>
+        return <Message key={message.id} id={message.id} message={message.message}/>
     })
     let newMessageBody = props.state.newMessageBody
 

@@ -1,10 +1,32 @@
-import {ActionsType, AddPostActionType, ProfilePage, UpdateNewPostTextActionType} from "./state";
+import {ActionsType} from "./redux-store"
 import {PropsType} from "../Components/Profile/MyPosts/Post/Post";
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 
-const profileReducer = (state: ProfilePage, action: ActionsType) => {
+export type ProfilePageType = {
+    posts: PropsType[]
+    newPostText: string
+}
+export type AddPostActionType = {
+    type: "ADD-POST"
+}
+export type UpdateNewPostTextActionType = {
+    type: "UPDATE-NEW-POST-TEXT"
+    newText: string
+}
+let initialState: ProfilePageType =
+    {
+        posts: [
+            {id: "1", message: "Haw are you", likesCount: 12},
+            {id: "2", message: "Created react App", likesCount: 2},
+            {id: "3", message: "Hi!!!!!!", likesCount: 22},
+            {id: "4", message: "Hello, my name is Vasya", likesCount: 12}
+        ],
+        newPostText: "It camasutra"
+    }
+
+const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PropsType = {id: "5", message: state.newPostText, likesCount: 0}
