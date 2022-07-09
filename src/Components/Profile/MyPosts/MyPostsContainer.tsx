@@ -1,10 +1,7 @@
-import React, {ChangeEvent} from "react";
-import s from "./MyPosts.module.css";
-import Post, {PropsType} from "./Post/Post";
-
+import React from "react";
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/ProfileReducer"
 import MyPosts from "./MyPosts";
-import {storeStateType, store, StateOfData} from "../../../redux/redux-store";
+import {store, StateOfData} from "../../../redux/redux-store";
 
 
 export type MyPostsState = {
@@ -25,7 +22,7 @@ const MyPostsContainer = (props: MyPostsState) => {
     }
     return (
         <MyPosts updateNewPostText={onPostChange} addPost={addPost} posts={store.getState().profilePage.posts}
-                 newPostText={props.store.data.profilePage.newPostText}/>
+                 newPostText={props.store.store.profilePage.newPostText}/>
     )
 
 }

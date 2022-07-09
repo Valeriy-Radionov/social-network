@@ -1,37 +1,34 @@
 import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem"
-import {DialogType} from "./DialogItem/DialogItem"
-import Message, {MessageType} from "./Message/Message";
-import {ActionsType} from "../../redux/redux-store";
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/DialogsReducer";
+import Message from "./Message/Message";
+import {DialogsPageType} from "../../redux/DialogsReducer";
 
-export type DialogsStateType = {
-    dialogs: DialogType[]
-    messages: MessageType[]
-    newMessageBody: string
-}
 export type DialogsPropsType = {
-    state: DialogsStateType
-    dispatch: (action: ActionsType) => void
-
+    // state: DialogsStateType
+    // dispatch: (action: ActionsType) => void
+    updateNewMessageBody: (body: string) => void
+    sendMessage: () => void
+    dialogsPage: DialogsPageType
 }
 const Dialogs = (props: DialogsPropsType) => {
-
-    let dialogsElement = props.state.dialogs.map((dialog) => {
+    let state = props.dialogsPage
+    let dialogsElement = state.dialogs.map((dialog) => {
         return <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>
     })
-    let messagesElement = props.state.messages.map((message) => {
+    let messagesElement = state.messages.map((message) => {
         return <Message key={message.id} id={message.id} message={message.message}/>
     })
-    let newMessageBody = props.state.newMessageBody
+    let newMessageBody = state.newMessageBody
 
     const onSendMessageClick = () => {
-        props.dispatch(sendMessageCreator())
+        // props.dispatch(sendMessageCreator())
+        props.sendMessage()
     }
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
-        props.dispatch(updateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body)
+        // props.dispatch(updateNewMessageBodyCreator(body))
 
     }
     return (
@@ -48,7 +45,6 @@ const Dialogs = (props: DialogsPropsType) => {
                         <button onClick={onSendMessageClick}>Send
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>

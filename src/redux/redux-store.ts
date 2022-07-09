@@ -3,8 +3,9 @@ import profileReducer, {AddPostActionType, ProfilePageType, UpdateNewPostTextAct
 import dialogsReducer, {DialogsPageType, SendMessageActionType, UpdateNewMessageTextActionType} from "./DialogsReducer";
 import sideBarReducer, {SideBarType} from "./SideBarReducer";
 
+
 export type StateOfData = {
-    data: RootStateType
+    store: RootStateType
     dispatch: (action: ActionsType) => void
 }
 
@@ -19,20 +20,12 @@ export type ActionsType =
     | UpdateNewMessageTextActionType
     | SendMessageActionType
 
-export type StoreType = {
-    _state: RootStateType
-    _callSubscriber: (state: RootStateType) => void
-
-    subscribe: (observer: (state: RootStateType) => void) => void
-    getState: () => RootStateType
-    dispatch: (action: ActionsType) => void
-}
-
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sideBar: sideBarReducer,
-} as const)
-
-export type storeStateType = ReturnType<typeof reducers>
-export let store: storeStateType = createStore(reducers);
+})
+export type stateType = ReturnType<typeof reducers>
+export type storeType = ReturnType<typeof store.getState>
+export let store = createStore(reducers);
+export type AppDispatch = typeof store.dispatch

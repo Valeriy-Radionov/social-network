@@ -4,6 +4,7 @@ import {MessageType} from "../Components/Dialogs/Message/Message";
 
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
+
 export type DialogsPageType = {
     dialogs: DialogType[]
     messages: MessageType[]
