@@ -7,20 +7,23 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {StateOfData} from "./redux/redux-store";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 
-const App: React.FC<StateOfData> = (props) => {
+const App = () => {
     return (
-        <BrowserRouter>
-            <div className="app-wrapper">
-                <Header/>
-                <Navbar/>
-                <div className="app-wrapper-content">
-                    <Route path="/dialogs"
-                           render={() => <DialogsContainer store={props.store} dispatch={props.dispatch}/>}/>
-                    <Route path="/profile"
-                           render={() => <Profile store={props}/>}/>
-                </div>
+
+        <div className="app-wrapper">
+            <Header/>
+            <Navbar/>
+            <div className="app-wrapper-content">
+                {/*<Route path="/dialogs"*/}
+                {/*       render={() => <DialogsContainer store={props.store} dispatch={props.dispatch}/>}/>*/}
+                {/*<Route path="/profile"*/}
+                {/*       render={() => <Profile store={props}/>}/>*/}
+                <Route path="/dialogs"
+                       render={() => <DialogsContainer/>}/>
+                <Route path="/profile"
+                       render={() => <Profile/>}/>
             </div>
-        </BrowserRouter>
+        </div>
     );
 }
 export default App;
