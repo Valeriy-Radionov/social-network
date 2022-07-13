@@ -1,13 +1,13 @@
 import React from "react";
 import s from "./Post.module.css";
 
-export type PropsType = {
+export type PostPropsType = {
     id: string
     message: string,
     likesCount: number
 }
 
-const Post = (props: PropsType) => {
+const Post = (props: PostPropsType) => {
     return (
         <div key={props.id} className={s.item}>
             <img

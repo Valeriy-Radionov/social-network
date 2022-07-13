@@ -1,22 +1,16 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./MyPosts.module.css";
-import Post, {PropsType} from "./Post/Post";
-import {ActionsType} from "../../../redux/redux-store";
-import {
-    addPostActionCreator,
-    updateNewPostTextActionCreator
-} from "../../../redux/ProfileReducer"
-
+import Post, {PostPropsType} from "./Post/Post";
 
 export type MyPostsState = {
-    posts: PropsType[]
+    posts: PostPropsType[]
     newPostText: string
     addPost: () => void
     updateNewPostText: (text: string) => void
     // dispatch: (action: ActionsType) => void
 }
 
-const MyPosts = (props: MyPostsState) => {
+export const MyPosts = (props: MyPostsState) => {
 
     let postsElements = props.posts.map((post) => {
         return (
@@ -55,4 +49,3 @@ const MyPosts = (props: MyPostsState) => {
     )
 
 }
-export default MyPosts

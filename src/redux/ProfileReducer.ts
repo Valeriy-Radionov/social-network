@@ -1,20 +1,14 @@
 import {ActionsType} from "./redux-store"
-import {PropsType} from "../Components/Profile/MyPosts/Post/Post";
+import {PostPropsType} from "../Components/Profile/MyPosts/Post/Post";
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 
 export type ProfilePageType = {
-    posts: PropsType[]
+    posts: PostPropsType[]
     newPostText: string
 }
-export type AddPostActionType = {
-    type: "ADD-POST"
-}
-export type UpdateNewPostTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    newText: string
-}
+
 let initialState: ProfilePageType =
     {
         posts: [
@@ -26,10 +20,10 @@ let initialState: ProfilePageType =
         newPostText: "It camasutra"
     }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
-            let newPost: PropsType = {id: "5", message: state.newPostText, likesCount: 0}
+            let newPost: PostPropsType = {id: "5", message: state.newPostText, likesCount: 0}
             state.posts.push(newPost)
             state.newPostText = ""
             return state
@@ -40,12 +34,20 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
             return state
     }
 }
+
+export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType
+
+type AddPostActionType = ReturnType<typeof addPostActionCreator>
 export const addPostActionCreator = () => {
-    const action: AddPostActionType = {type: ADD_POST}
-    return action
+    return {
+        type: ADD_POST
+    } as const
 }
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextActionCreator>
 export const updateNewPostTextActionCreator = (text: string) => {
-    const action: UpdateNewPostTextActionType = {type: UPDATE_NEW_POST_TEXT, newText: text}
-    return action
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    } as const
 }
 export default profileReducer
