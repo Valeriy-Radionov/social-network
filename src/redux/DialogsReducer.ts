@@ -1,5 +1,6 @@
 import {DialogType} from "../Components/Dialogs/DialogItem/DialogItem";
 import {MessageType} from "../Components/Dialogs/Message/Message";
+import {v1} from "uuid";
 
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
@@ -39,15 +40,22 @@ let initialState: DialogsPageType = {
 }
 
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsDialogsType): DialogsPageType => {
+
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.body
-            return state
-        case SEND_MESSAGE:
+        case UPDATE_NEW_MESSAGE_BODY: {
+            return {
+                ...state,
+                newMessageBody: action.body
+            }
+        }
+        case SEND_MESSAGE: {
             let body = state.newMessageBody
-            state.newMessageBody = ""
-            state.messages.push({id: "6", message: body})
-            return state
+            return {
+                ...state,
+                newMessageBody: "",
+                messages: [...state.messages, {id: v1(), message: body}]
+            }
+        }
         default:
             return state
     }

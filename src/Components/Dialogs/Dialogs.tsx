@@ -28,9 +28,8 @@ const Dialogs = (props: DialogsPropsType) => {
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
         props.updateNewMessageBody(body)
-        // props.dispatch(updateNewMessageBodyCreator(body))
-
     }
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
