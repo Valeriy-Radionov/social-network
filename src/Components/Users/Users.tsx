@@ -5,74 +5,74 @@ import axios from "axios";
 import userPhoto from "../../../src/assets/images/default avatar.png"
 
 type UsersPropsType = {
-    follow: (userId: number) => void,
+    follow: (userId: number) => void
     unfollow: (userId: number) => void
     setUsers: (users: UserType[]) => void
+    setCurrentPage: (pageNumber: number) => void
+    setTotalCount: (totalCount: number) => void
     usersPage: UsersType
+    totalUsersCount: number
+    currentPage: number
+    pageSize: number
 }
-export const Users = (props: UsersPropsType) => {
 
-    if (props.usersPage.items.length === 0) {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-            props.setUsers(response.data.items)
+export class Users extends React.Component<UsersPropsType> {
+
+    getUsersData() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+            this.props.setTotalCount(response.data.totalCount)
+
         })
-        // props.setUsers(
-        //     [
-        //         {
-        //             id: "1",
-        //             followed: false,
-        //             fullName: "Valera",
-        //             status: "I'm a boss",
-        //             photoUrl: "https://android-obzor.com/wp-content/uploads/2022/02/70-2-300x300.jpg",
-        //             location: {country: "Belarus", city: "Minsk"}
-        //         },
-        //         {
-        //             id: "2", followed: true,
-        //             fullName: "Kirill",
-        //             status: "I want to change this world",
-        //             photoUrl: "https://android-obzor.com/wp-content/uploads/2022/02/68-7.jpg",
-        //             location: {country: "Poland", city: "Krakov"}
-        //         },
-        //         {
-        //             id: "3",
-        //             followed: false,
-        //             fullName: "Dima",
-        //             status: "This is status...",
-        //             photoUrl: "https://android-obzor.com/wp-content/uploads/2022/02/68-2-300x300.jpg",
-        //             location: {country: "Russia", city: "Moscow"}
-        //         },
-        //         {
-        //             id: "4",
-        //             followed: true,
-        //             fullName: "Sveta",
-        //             status: "Hello my friends",
-        //             photoUrl: "https://android-obzor.com/wp-content/uploads/2022/02/34-2-300x300.jpg",
-        //             location: {country: "USA", city: "New York"}
-        //         }
-        //     ]
-        // )
     }
-    return (
-        <div>
-            {props.usersPage.items.map(user => {
-                return (
-                    <div key={user.id}>
-                        {/*avatar + button*/}
-                        <span>
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+        })
+    }
+
+    componentDidMount() {
+        this.getUsersData()
+    }
+
+    render() {
+        console.log(this.props.usersPage)
+        let pagesCount: number = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pages: number[] = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
+        return (
+            <div>
+                <div>
+                    {pages.map(p => {
+                        return <span key={p} className={this.props.currentPage === p ? s.selectedPage : ""}
+                                     onClick={() => this.onPageChanged(p)}>{p}</span>
+                    })}
+
+                </div>
+                {this.props.usersPage.items.map(user => {
+                    return (
+                        <div key={user.id}>
+                            {/*avatar + button*/}
+                            <span>
                             <div><img className={s.userPhoto}
                                       src={user.photos.small != null ? user.photos.small : userPhoto}/></div>
                             <div>
                                 {user.followed ? <button onClick={() => {
-                                        props.unfollow(user.id)
+                                        this.props.unfollow(user.id)
                                     }}>Unfollow</button> :
                                     <button onClick={() => {
-                                        props.follow(user.id)
+                                        this.props.follow(user.id)
                                     }}>Follow</button>}
                             </div>
                         </span>
-                        <span>
-                            {/*Name + status*/}
                             <span>
+                            {/*Name + status*/}
+                                <span>
                                 <div>{user.name}</div>
                                 <div>{user.status}</div>
                             </span>
@@ -81,10 +81,57 @@ export const Users = (props: UsersPropsType) => {
                                 <div>{"user.location.city"}</div>
                             </span>
                         </span>
-                    </div>
-                )
-            })}
-        </div>
-    );
-};
+                        </div>
+                    )
+                })}
+            </div>
+        );
+    }
+
+}
+
+//     let getUsers = () => {
+//         if (props.usersPage.items.length === 0) {
+//             axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+//                 props.setUsers(response.data.items)
+//             })
+//         }
+//     }
+//
+//     return (
+//         <div>
+//             <button onClick={getUsers}>get users</button>
+//             {props.usersPage.items.map(user => {
+//                 return (
+//                     <div key={user.id}>
+//                         {/*avatar + button*/}
+//                         <span>
+//                             <div><img className={s.userPhoto}
+//                                       src={user.photos.small != null ? user.photos.small : userPhoto}/></div>
+//                             <div>
+//                                 {user.followed ? <button onClick={() => {
+//                                         props.unfollow(user.id)
+//                                     }}>Unfollow</button> :
+//                                     <button onClick={() => {
+//                                         props.follow(user.id)
+//                                     }}>Follow</button>}
+//                             </div>
+//                         </span>
+//                         <span>
+//                             {/*Name + status*/}
+//                             <span>
+//                                 <div>{user.name}</div>
+//                                 <div>{user.status}</div>
+//                             </span>
+//                             <span>
+//                                 <div>{"user.location.country"}</div>
+//                                 <div>{"user.location.city"}</div>
+//                             </span>
+//                         </span>
+//                     </div>
+//                 )
+//             })}
+//         </div>
+//     );
+// };
 
