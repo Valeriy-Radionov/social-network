@@ -15,3 +15,6 @@ let RootReducer = combineReducers({
 export type RootStateType = ReturnType<typeof RootReducer>
 
 export let store = createStore(RootReducer);
+
+// @ts-ignore
+window.store = store
