@@ -3,6 +3,7 @@ import profileReducer, {ProfileActionsType} from "./ProfileReducer";
 import dialogsReducer, {ActionsDialogsType} from "./DialogsReducer";
 import sideBarReducer from "./SideBarReducer";
 import {usersReducer} from "./UsersReducer";
+import {authReducer} from "./auth-reducer";
 
 export type ActionsType = ProfileActionsType | ActionsDialogsType
 
@@ -10,7 +11,8 @@ let RootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sideBar: sideBarReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer
 })
 export type RootStateType = ReturnType<typeof RootReducer>
 
