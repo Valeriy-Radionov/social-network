@@ -1,4 +1,4 @@
-import profileReducer from "./ProfileReducer";
+import profileReducer from "./profileReducer";
 // import dialogsReducer from "./DialogsReducer";
 // import sideBarReducer from "./SideBarReducer";
 // import {DialogType} from "../Components/Dialogs/DialogItem/DialogItem";
