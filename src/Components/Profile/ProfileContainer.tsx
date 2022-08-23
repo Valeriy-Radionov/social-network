@@ -22,6 +22,7 @@ export type ProfileContainerType = {
 }
 
 class ProfileContainer extends React.Component<WithRoutPropsType> {
+
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
