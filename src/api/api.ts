@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UsersType} from "../redux/usersReducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -21,8 +22,17 @@ export const usersAPI = {
     unfollow(id: number) {
         return instance.delete(`follow/${id}`)
     },
+}
+
+export const profileAPI = {
     getProfile(userId: string) {
         return instance.get(`profile/${userId}`)
+    },
+    getStatus(userId: string) {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status: status})
     }
 }
 

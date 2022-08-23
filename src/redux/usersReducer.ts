@@ -22,6 +22,7 @@ export type UsersType = {
     isFetching: boolean
     followingInProgress: number[]
 }
+
 //Constants
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
