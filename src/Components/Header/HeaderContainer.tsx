@@ -7,7 +7,7 @@ import {RootStateType} from "../../redux/redux-store";
 
 type HeaderContainerType = {
     isAuth: boolean
-    login: string
+    login: string | null
     getAuthUserData: () => void
 }
 

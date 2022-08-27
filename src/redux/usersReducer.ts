@@ -75,7 +75,7 @@ export const usersReducer = (state: UsersType = initialState, action: UsersActio
     }
 }
 //AC Type
-type UsersActionType =
+export type UsersActionType =
     FollowACType
     | UnfollowACType
     | SetUsersACType

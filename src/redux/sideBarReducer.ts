@@ -1,5 +1,3 @@
-import {ActionsType} from "./redux-store"
-
 export type SideBarType = {}
 
 const initialState: SideBarType = {}
@@ -9,11 +7,13 @@ const sideBarReducer = (state: SideBarType = initialState, action: SideBarAction
     return state
 }
 
-type SideBarActionType = sideBarReducerACType
+export type SideBarActionType = sideBarReducerACType
 
 type sideBarReducerACType = ReturnType<typeof sideBarReducerAC>
 const sideBarReducerAC = () => {
-    return {}
+    return {
+        type: "SHOW-SIDE-BAR"
+    } as const
 }
 
 export default sideBarReducer
