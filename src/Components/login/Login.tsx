@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, FormProps, InjectedFormProps, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 type LoginPropsType = {}
 
