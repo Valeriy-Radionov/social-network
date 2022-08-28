@@ -20,7 +20,7 @@ let initialState: AuthUserData = {
 export const authReducer = (state: AuthUserData = initialState, action: AuthActionType): AuthUserData => {
     switch (action.type) {
         case SET_USER_DATA: {
-            return {...state, ...action.payload, isAuth: true}
+            return {...state, ...action.payload}
         }
         default:
             return state
