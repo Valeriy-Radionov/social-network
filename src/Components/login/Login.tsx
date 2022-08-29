@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {RootStateType} from "../../redux/redux-store";
+import style from "../common/FormsControls/FormsControls.module.css"
+import {inspect} from "util";
 
 type LoginPropsType = {
     login: (email: string, password: string, rememberMe: boolean) => void
@@ -34,6 +36,7 @@ type FormDataType = {
     password: string
     rememberMe: boolean
 }
+
 export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
@@ -41,6 +44,11 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             <div><Field name={"password"} component={Input} placeholder={"Password"} validate={[requiredField]}
                         type={"password"}/></div>
             <div><Field name={"rememberMe"} component={"input"} type={"checkbox"}/> remember me</div>
+            {props.error &&
+                <div className={style.formSummaryError}>
+                    {props.error}
+                </div>
+            }
             <div>
                 <button>Login</button>
             </div>

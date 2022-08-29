@@ -14,7 +14,6 @@ export type AppActionsType =
     | SideBarActionType
     | UsersActionType
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, AppActionsType>
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -24,8 +23,10 @@ let rootReducer = combineReducers({
     auth: authReducer,
     form: formReducer
 })
-export type RootStateType = ReturnType<typeof rootReducer>
 
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, AppActionsType>
+
+export type RootStateType = ReturnType<typeof rootReducer>
 export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 // @ts-ignore
 window.store = store

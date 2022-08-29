@@ -1,17 +1,18 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = "SET_USER_DATA"
 
 export type AuthUserData = {
-    id: number | null
+    userId: number | null
     login: string | null
     email: string | null
     isAuth: boolean
 }
 let initialState: AuthUserData = {
-    id: null,
+    userId: null,
     login: null,
     email: null,
     isAuth: false
@@ -53,6 +54,9 @@ export const login = (email: string, password: string, rememberMe: boolean): App
     const response = await authAPI.login(email, password, rememberMe)
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserData())
+    } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+        dispatch(stopSubmit("login", {_error: message}))
     }
 }
 
