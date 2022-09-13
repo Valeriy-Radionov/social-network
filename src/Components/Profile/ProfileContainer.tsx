@@ -14,8 +14,8 @@ type PathParamsType = {
 }
 export type ProfileContainerType = {
     profile: ProfileType
-    getUserProfile: (userId: string) => void
-    getStatus: (userId: string) => void
+    getUserProfile: (userId: number) => void
+    getStatus: (userId: number) => void
     updateStatus: (status: string) => void
     authorizedUserId: number | null
     isAuth: boolean
@@ -25,9 +25,11 @@ export type ProfileContainerType = {
 class ProfileContainer extends React.Component<WithRoutPropsType> {
 
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        // исправить!!! при логинизаии не работает
+        let userId = Number(this.props.match.params.userId)
         if (!userId) {
-            this.props.authorizedUserId ? (userId = this.props.authorizedUserId.toString()) : ""
+            userId = this.props.authorizedUserId!
+            !userId && this.props.history.push("/login")
 
         }
         this.props.getUserProfile(userId)

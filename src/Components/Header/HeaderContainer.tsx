@@ -8,15 +8,10 @@ import {RootStateType} from "../../redux/redux-store";
 type HeaderContainerType = {
     isAuth: boolean
     login: string | null
-    getAuthUserData: () => void
     logout: () => void
 }
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
-    componentDidMount() {
-        this.props.getAuthUserData()
-    }
-
     render() {
         return <Header {...this.props}/>
     }
@@ -29,4 +24,4 @@ const mapStateToProps = (state: RootStateType) => ({
     login: state.auth.login
 })
 
-export default connect(mapStateToProps, {getAuthUserData, logout})(HeaderContainer)
+export default connect(mapStateToProps, {logout})(HeaderContainer)
